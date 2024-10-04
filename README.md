@@ -36,6 +36,3 @@ Arquivo que cria a interface gráfica e realiza os comandos para administra o ar
 As palhetas de cores utilizadas, vai ser variações de azul, verde, branco e talvez vermelho para ações criticas no sistema.
 
 Aonde o executável vai ter somente três telas uma que mostre todas as tarefas, outra que ao clicar na tarefa mostre toda informações e uma focada na criação e edição das tarefas.
-
-
-
