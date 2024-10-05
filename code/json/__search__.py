@@ -19,4 +19,5 @@ if __name__ == "__main__":
     load = Search()
     arquivo = load.search()
 
-    print(arquivo)
+    for tarefa in arquivo['teste']:
+        print(f"Nome: {tarefa['nome']}, Prioridade: {tarefa['prioridade']}")
