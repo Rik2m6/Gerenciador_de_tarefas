@@ -4,7 +4,7 @@ class Search():
 
     def __init__(self):
         
-        self.caminho = 'code//json//dados.json'
+        self.caminho = 'code//paste_json//dados.json'
 
     def search(self):
 

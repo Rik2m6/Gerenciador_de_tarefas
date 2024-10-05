@@ -8,6 +8,7 @@ class  Window(QMainWindow):
     def __init__(self, dados):
         super().__init__()
         self.dados = dados
+        print(dados)
         
     def criar(self):
            

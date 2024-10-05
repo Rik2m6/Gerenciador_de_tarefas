@@ -1,0 +1,3 @@
+# code/Gui/__init__.py
+
+from .GUI import Window  # Importa a classe Window do módulo GUI
