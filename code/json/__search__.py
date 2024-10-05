@@ -4,7 +4,7 @@ class Search():
 
     def __init__(self):
         
-        self.caminho = './/code//json//dados.json'
+        self.caminho = 'code//json//dados.json'
 
     def search(self):
 
@@ -13,3 +13,10 @@ class Search():
             load_json = json.load(file)
 
         return load_json
+
+if __name__ == "__main__":
+
+    load = Search()
+    arquivo = load.search()
+
+    print(arquivo)
