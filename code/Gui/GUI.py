@@ -1,4 +1,7 @@
 from PyQt6.QtWidgets import QMainWindow, QWidget, QApplication, QVBoxLayout, QLabel, QGridLayout, QPushButton, QScrollArea
+from PyQt6.QtCore import Qt, QEvent, QSize
+from  PyQt6.QtGui import QFont, QPalette, QColor, QIcon
+
 import sys
 
 
@@ -19,17 +22,64 @@ class Window(QMainWindow):
         self.setCentralWidget(self.tela_principal)
         self.layout_screen()
         self.setGeometry(100, 100, 800, 600)
+        self.setMaximumSize(800, 600)
+        self.add_task()
 
     def layout_screen(self):
         self.layout_main_window = QVBoxLayout()
         self.tela_principal.setLayout(self.layout_main_window)
         self.layout_main_window_canvas()
+    def add_task(self):
 
+        self.botton_add = QPushButton(self)
+        icon_mais = QIcon("code//Gui//data//pngegg.png")
+        self.botton_add.setIcon(icon_mais)
+        self.botton_add.setIconSize(QSize(75, 75))
+       
+        self.botton_add.move(680, 480)
+        self.botton_add.setFixedSize(100, 100)
+        
+        self.botton_add.setVisible(True)
+        self.botton_add.setStyleSheet(
+            """
+QPushButton{
+background: #4ddef7;
+border-radius: 50px;
+font-size:  75px;
+padding: 20px;
+
+}
+QPushButton:hover{
+background: #3eaec2;
+border-radius: 55px;
+}
+QPushButton:pressed{
+background:  #266a75;
+
+}
+""")
+        self.botton_add.setMouseTracking(True)
+        self.botton_add.installEventFilter(self)
+
+    def eventFilter(self, obj, event):
+        if obj == self.botton_add:
+            if event.type() == QEvent.Type.HoverEnter:
+                self.botton_add.setFixedSize(110, 110)
+                self.botton_add.move(675, 475)
+                self.botton_add.setIconSize(QSize(80, 80))
+        
+            elif (event.type() == QEvent.Type.HoverLeave):
+                self.botton_add.setFixedSize(100, 100)
+                self.botton_add.move(680, 480)
+                self.botton_add.setIconSize(QSize(75, 75))
+        
+        return super().eventFilter(obj, event)
+        
     def layout_main_window_canvas(self):
         self.top_rect = QWidget()
         self.top_rect.setStyleSheet("""
         QWidget {
-            background-color: #2390cf;      
+            background-color: #4ddef7;      
             font-size: 28px;     
             font-family: Bahnschrift SemiBold Condensed;                       
         }
@@ -55,19 +105,19 @@ class Window(QMainWindow):
         # Estilos dos botões
         botoes_estilo_editar = """
         QPushButton {
-            background-color: blue;
+            background-color: #2a99fa;
             color: white;
         }
         """
         botoes_estilo_excluir = """
         QPushButton {
-            background-color: red;
+            background-color: #ff1919;
             color: white;
         }
         """
         botoes_estilo_concluido = """
         QPushButton {
-            background-color: green;
+            background-color: #2cf267;
             color: white;
         }
         """
@@ -86,7 +136,7 @@ class Window(QMainWindow):
             widget_toDOlist.setFixedSize(750, 200)
             widget_toDOlist.setStyleSheet("""
 QWidget {
-    background: gray;
+    background: #ededed;
     border: 1px solid black;
     border-radius: 8px;
     padding: 5px;
@@ -101,15 +151,21 @@ QWidget {
 
             status_tarefa = QLabel(f'Status: {arquivo["status"]}')
             status_tarefa.setStyleSheet(estilo_letra)
+            if arquivo["status"] == 'Concluida.':
+                excluir_botao = QPushButton("EXCLUIR")
+                excluir_botao.setStyleSheet(botoes_estilo_excluir)
+            else:
+                
+                editar_botao = QPushButton("EDITAR")
+                editar_botao.setStyleSheet(botoes_estilo_editar)
 
-            editar_botao = QPushButton("EDITAR")
-            editar_botao.setStyleSheet(botoes_estilo_editar)
+                excluir_botao = QPushButton("EXCLUIR")
+                excluir_botao.setStyleSheet(botoes_estilo_excluir)
 
-            excluir_botao = QPushButton("EXCLUIR")
-            excluir_botao.setStyleSheet(botoes_estilo_excluir)
+                marcar_concluido_botao = QPushButton("MARCAR COMO CONCLUÍDO")
+                marcar_concluido_botao.setStyleSheet(botoes_estilo_concluido)
 
-            marcar_concluido_botao = QPushButton("MARCAR COMO CONCLUÍDO")
-            marcar_concluido_botao.setStyleSheet(botoes_estilo_concluido)
+            
 
             # Adiciona os widgets ao layout
             layout_tarefa.addWidget(nome_tarefa, 0, 0)
@@ -121,9 +177,14 @@ QWidget {
             botoes_layout.setRowMinimumHeight(1, 50)
             botoes_layout.setColumnStretch(5, 5)
 
-            botoes_layout.addWidget(editar_botao, 0, 3)
-            botoes_layout.addWidget(excluir_botao, 0, 4)
-            botoes_layout.addWidget(marcar_concluido_botao, 0, 5)
+            
+            if arquivo["status"] == 'Concluida.':
+                excluir_botao.setMinimumHeight(20)
+                botoes_layout.addWidget(excluir_botao, 1, 5)
+            else:
+                botoes_layout.addWidget(excluir_botao, 0, 4)
+                botoes_layout.addWidget(editar_botao, 0, 3)
+                botoes_layout.addWidget(marcar_concluido_botao, 0, 5)
 
             layout_tarefa.addLayout(botoes_layout, 1, 0, 1, 3)  # Adiciona o layout de botões
 
