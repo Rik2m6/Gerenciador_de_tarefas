@@ -1,0 +1,50 @@
+Fluxo de Dados do Projeto Gerenciador de Tarefas
+Inicialização do Programa
+
+A função main é chamada, iniciando o programa.
+Carregamento de Dados
+
+Leitura do Arquivo JSON:
+A main invoca a classe responsável pela organização e filtragem das tarefas.
+Essa classe lê o arquivo JSON que contém as tarefas.
+Os dados são carregados em uma estrutura apropriada (ex.: lista de tuplas ou dicionários).
+Tratamento de Erros:
+Caso ocorra um erro ao ler o arquivo (ex.: FileNotFoundError), uma exceção é capturada e uma mensagem de erro é exibida.
+Processamento de Dados
+
+Após a leitura, as tarefas são organizadas e filtradas pela classe de organização.
+A classe pode fornecer funcionalidades para adicionar, remover ou editar tarefas, que são realizadas em resposta a comandos do usuário.
+Interface Gráfica
+
+Criação da Interface:
+A main chama a classe responsável pela interface gráfica, que cria as telas necessárias:
+Tela de listagem de tarefas: exibe todas as tarefas disponíveis.
+Tela de detalhes: ao clicar em uma tarefa, exibe informações detalhadas.
+Tela de criação/edição: permite ao usuário adicionar ou modificar tarefas.
+Interação do Usuário:
+O usuário interage com a interface (ex.: clicando em botões para adicionar ou editar tarefas).
+Gerenciamento de Tarefas
+
+Adicionar Nova Tarefa:
+Quando o usuário adiciona uma tarefa:
+A interface coleta as informações inseridas pelo usuário (nome, descrição, datas, tipo, etc.).
+Essas informações são passadas para a classe de organização.
+A nova tarefa é adicionada à lista e gravada de volta no arquivo JSON.
+Remover ou Editar Tarefa:
+Ao remover ou editar uma tarefa, a interface chama as funções correspondentes na classe de organização, que atualiza a lista de tarefas e salva as alterações no arquivo JSON.
+Persistência de Dados
+
+Após qualquer alteração (adição, remoção ou edição), a classe de organização grava os dados de volta no arquivo JSON, garantindo que as alterações sejam persistentes.
+Finalização do Programa
+
+O usuário pode optar por encerrar o programa.
+A main finaliza a execução, possivelmente limpando recursos ou salvando estados finais se necessário.
+
+main() → [Leitura do JSON] → [Classe de Organização] → [Dados de Tarefas]
+            ↓                                 |
+            ↓                                 ↓
+    [Interface Gráfica] ← [Interação do Usuário]
+            |
+   [Adicionar/Remover/Edições]
+            ↓
+    [Atualização no JSON]
