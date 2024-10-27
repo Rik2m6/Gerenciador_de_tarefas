@@ -34,14 +34,14 @@ class Window(QMainWindow):
             data = Search()
             arquivos = data.search()
         except json.JSONDecodeError as erro:
-            print(f"Erro ao carregar os dados: {erro}")
-
+            pass
         finally:
             pass
         return arquivos
+    
     def criar(self):
         self.tela_principal = QWidget()
-        self.tela_principal.setStyleSheet("QWidget { background-color: white; }")
+        self.tela_principal.setStyleSheet("QWidget { background-color: #0d0403; }")
         self.setCentralWidget(self.tela_principal)
         self.layout_screen()
         self.setGeometry(100, 100, 800, 600)
@@ -64,17 +64,17 @@ class Window(QMainWindow):
         self.botton_add.setVisible(True)
         self.botton_add.setStyleSheet("""
             QPushButton {
-                background: #4ddef7;
+                background: #ff0800;
                 border-radius: 50px;
                 font-size: 75px;
                 padding: 20px;
             }
             QPushButton:hover {
-                background: #3eaec2;
+                background: #470200;
                 border-radius: 55px;
             }
             QPushButton:pressed {
-                background: #266a75;
+                background:#1a0100;
             }
         """)
         self.botton_add.setMouseTracking(True)
@@ -96,9 +96,10 @@ class Window(QMainWindow):
         self.top_rect = QWidget()
         self.top_rect.setStyleSheet("""
             QWidget {
-                background-color: #4ddef7;
+                background-color: #c40700;
                 font-size: 28px;
                 font-family: Bahnschrift SemiBold Condensed;
+                                    border-radius: 4px;
             }
         """)
         self.logo_texto = QLabel("Organizador de tarefas", self.top_rect)
@@ -153,7 +154,7 @@ class Window(QMainWindow):
             return  # Se não houver dados, não faz nada
         
         for id, arquivo in self.dados['tasks'].items():
-            print(arquivo)
+            # print(arquivo)
             layout_tarefa = QGridLayout()
             widget_toDOlist = QWidget()
             widget_toDOlist.setLayout(layout_tarefa)
@@ -184,6 +185,9 @@ class Window(QMainWindow):
                 excluir_botao.setStyleSheet(botoes_estilo_excluir)
             else:
                 editar_botao = QPushButton("EDITAR")
+                editar_botao.clicked.connect(lambda id = id,  arquivo = arquivo: self.editar_tarefa(id, arquivo))
+
+
                 editar_botao.setStyleSheet(botoes_estilo_editar)
                 excluir_botao = QPushButton("EXCLUIR")
                 excluir_botao.setStyleSheet(botoes_estilo_excluir)
@@ -218,7 +222,7 @@ class Window(QMainWindow):
 
     def painel_criar(self):
         self.painel_criar = QWidget()
-        self.painel_criar.setStyleSheet("QWidget { background: white; color: black; }")
+        self.painel_criar.setStyleSheet("QWidget { background: #0d0403; color: white; }")
         self.painel_criar.setGeometry(700, 50, 400, 500)
         self.painel_criar.setFixedSize(400, 500)
         self.painel_criar_canvas()
@@ -303,17 +307,12 @@ class Window(QMainWindow):
             if widget is not None:
                 widget.deleteLater()  # Remove o widget da memória
 
+    def editar_task(self, id, data):
+        self.screen_edit = QWidget()
+        self.screen_edit.setGeometry(700, 200, 400, 500)
+        self.screen_edit.show()
+
+    
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-
-    # Exemplo de dados
-    dados_exemplo = {
-        "1": {"nome": "Tarefa 1", "prioridade": "Alta", "status": "Pendente"},
-        "2": {"nome": "Tarefa 2", "prioridade": "Média", "status": "Em Progresso"}
-    }
-
-    window = Window(dados=dados_exemplo)
-    window.show()
-
-    sys.exit(app.exec())
+    pass
