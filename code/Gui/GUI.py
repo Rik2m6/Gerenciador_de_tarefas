@@ -4,7 +4,8 @@ from PyQt6.QtGui import QIcon
 import json
 import os
 import sys
-from paste_json.decorator import registrar_chamada
+import json
+from paste_json.__search__ import Search
 
 class LimitedTextEdit(QTextEdit):
     def __init__(self, max_chars, *args, **kwargs):
@@ -21,11 +22,23 @@ class LimitedTextEdit(QTextEdit):
             super().keyPressEvent(event)
 
 class Window(QMainWindow):
-    def __init__(self, dados):
+    def __init__(self, ):
         super().__init__()
-        self.dados = dados
+        arquivos = []
+        
+        
         self.criar()
 
+    def arq(self):
+        try:
+            data = Search()
+            arquivos = data.search()
+        except json.JSONDecodeError as erro:
+            print(f"Erro ao carregar os dados: {erro}")
+
+        finally:
+            pass
+        return arquivos
     def criar(self):
         self.tela_principal = QWidget()
         self.tela_principal.setStyleSheet("QWidget { background-color: white; }")
@@ -104,9 +117,11 @@ class Window(QMainWindow):
         self.scroll_area.setWidget(self.widget_tarefas)
 
         self.layout_toDOList_create()
-    @registrar_chamada
+
     def layout_toDOList_create(self):
         self.clear_layout()
+        self.dados = self.arq()
+
         # Estilos dos botões
         botoes_estilo_editar = """
             QPushButton {
